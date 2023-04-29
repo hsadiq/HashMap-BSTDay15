@@ -1,48 +1,43 @@
 package com.bl.BST;
+public class BinarySearchTree<T extends Comparable<T>> {
+    private INode<T> root;
 
-public class BinarySearchTree<T extends Comparable<T>>{
-    class INode{
-        T key;
-        INode left, right;
-
-        public INode(T key){
-            this.key = key;
-            left = right = null;
+    public void addNode(T key) {
+        INode<T> newNode = new BinaryNode<>(key);
+        if (root == null) {
+            root = newNode;
+        } else {
+            INode<T> current = root;
+            INode<T> parent;
+            while (true) {
+                parent = current;
+                if (key.compareTo(current.getKey()) < 0) {
+                    current = current.getLeft();
+                    if (current == null) {
+                        parent.setLeft(newNode);
+                        break;
+                    }
+                } else {
+                    current = current.getRight();
+                    if (current == null) {
+                        parent.setRight(newNode);
+                        break;
+                    }
+                }
+            }
         }
     }
-    INode root;
-    public BinarySearchTree(){
-        root = null;
+
+    public int getSize() {
+        return getSizeRecursive(root);
     }
 
-    public void add(T key){
-        root = addRecursive(root, key);
-    }
-
-    private INode addRecursive(INode current, T key){
-        if (current == null){
-            return new INode(key);
+    private int getSizeRecursive(INode<T> node) {
+        if (node == null) {
+            return 0;
         }
-
-        if (key.compareTo(current.key) < 0){
-            current.left = addRecursive(current.left, key);
-        }else if (key.compareTo(current.key)>0) {
-            current.right = addRecursive(current.right, key);
-        }
-        return current;
+        return 1 + getSizeRecursive(node.getLeft()) + getSizeRecursive(node.getRight());
     }
 
-    //Method to print BST inorder
 
-    public void inorder(){
-        inorderRecursive(root);
-    }
-
-    private void inorderRecursive(INode current){
-        if (current != null){
-            inorderRecursive(current.left);
-            System.out.print(current.key + " ");
-            inorderRecursive(current.right);
-        }
-    }
 }
