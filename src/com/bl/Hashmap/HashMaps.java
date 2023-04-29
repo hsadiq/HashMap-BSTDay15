@@ -17,6 +17,7 @@ public class HashMaps {
             Value +=1;
             map.put(word,Value);
         }
+        System.out.print(map);
 
     }
 }
