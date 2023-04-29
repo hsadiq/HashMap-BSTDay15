@@ -10,13 +10,15 @@ public class HashMaps {
         String[] words =sentence.toLowerCase().split(" ");
 
         for(String word: words){
-            Integer Value = map.get(word);
-            if(Value == null){
-                Value = 0;
+            if (map.containsKey(word)){
+                int Value = map.get(word);
+                map.put(word, Value + 1);
+            }else {
+                map.put(word, 1);
             }
-            Value +=1;
-            map.put(word,Value);
         }
+
+        map.remove("avoidable");
         System.out.print(map);
 
     }
